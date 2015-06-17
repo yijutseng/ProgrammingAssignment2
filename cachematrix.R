@@ -1,13 +1,13 @@
-## Matrix inversion is usually a costly computation and 
-## there may be some benefit to caching the inverse of a matrix rather than 
+## Matrix inversion is usually a costly computation and
+## there may be some benefit to caching the inverse of a matrix rather than
 ## computing it repeatedly.
-## Use makeCacheMatrix to create a special "matrix" object that can cache its 
-## inverse, then use cacheSolve to compute the inverse of the special "matrix" 
+## Use makeCacheMatrix to create a special "matrix" object that can cache its
+## inverse, then use cacheSolve to compute the inverse of the special "matrix"
 ## returned by makeCacheMatrix.
-## If the inverse has already been calculated (and the matrix has not changed), 
+## If the inverse has already been calculated (and the matrix has not changed),
 ## then cacheSolve should retrieve the inverse from the cache.
 
-## Test the code by: 
+## Test the code by:
 ## testMatrix <- matrix(rnorm(10*10), 10, 10)
 ## cacheX<-makeCacheMatrix(testMatrix)
 ## cacheSolve(cacheX)
@@ -21,25 +21,28 @@ makeCacheMatrix <- function(x = matrix()) {
     x <<- y
     i <<- NULL
   }
-  get <- function() x
+  get <- function()
+    x
   setInverse <- function(inv) {
     i <<- inv
-    }
+  }
   getInverse <- function() {
     i
-    }
-  list(set = set, get = get,
-       setInverse = setInverse,
-       getInverse = getInverse)
+  }
+  list(
+    set = set, get = get,
+    setInverse = setInverse,
+    getInverse = getInverse
+  )
 }
 
 
-## This function computes the inverse of the special "matrix" returned by 
-## makeCacheMatrix above. 
+## This function computes the inverse of the special "matrix" returned by
+## makeCacheMatrix above.
 ## x should be the 'specual matrix'
 cacheSolve <- function(x, ...) {
   i <- x$getInverse()
-  if(!is.null(i)) {
+  if (!is.null(i)) {
     message("getting cached data")
     return(i)
   }
@@ -48,6 +51,3 @@ cacheSolve <- function(x, ...) {
   x$setInverse(i)
   i
 }
-
-
-
